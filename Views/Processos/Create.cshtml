@@ -1,0 +1,111 @@
+﻿@model Crud_IBGE.Models.Processo
+
+@{
+    ViewData["Title"] = "Create";
+}
+
+<h1>Create</h1>
+
+<h4>Processo</h4>
+<hr />
+<div class="row">
+    <div class="col-md-4">
+        <form asp-action="Create">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <div class="form-group">
+                <label asp-for="NomeProcesso" class="control-label"></label>
+                <input asp-for="NomeProcesso" class="form-control" />
+                <span asp-validation-for="NomeProcesso" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="NPU" class="control-label"></label>
+                <input asp-for="NPU" class="form-control" />
+                <span asp-validation-for="NPU" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="UF" class="control-label"></label>
+                <select asp-for="UF" class="form-control" id="ufSelect">
+                    <option value="">Selecione a UF</option>
+                </select>
+                <span asp-validation-for="UF" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="MunicipioNome" class="control-label"></label>
+                <select asp-for="MunicipioNome" class="form-control" id="municipioSelect">
+                    <option value="">Selecione o Município</option>
+                </select>
+                <span asp-validation-for="MunicipioNome" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="MunicipioCodigo" class="control-label"></label>
+                <input asp-for="MunicipioCodigo" class="form-control" id="municipioCodigo" readonly />
+                <span asp-validation-for="MunicipioCodigo" class="text-danger"></span>
+            </div>
+            <br />
+            <div class="form-group">
+                <input type="submit" value="Create" class="btn btn-primary" />
+            </div>
+        </form>
+    </div>
+</div>
+
+<div>
+    <a asp-action="Index">Back to List</a>
+</div>
+
+@section Scripts {
+    @{
+        await Html.RenderPartialAsync("_ValidationScriptsPartial");
+    }
+
+    <script>
+        document.addEventListener("DOMContentLoaded", function () {
+            // Carregar UFs ao iniciar a página
+            fetch('https://servicodados.ibge.gov.br/api/v1/localidades/estados')
+                .then(response => response.json())
+                .then(data => {
+                    let ufSelect = document.getElementById("ufSelect");
+                    data.forEach(uf => {
+                        let option = document.createElement("option");
+                        option.value = uf.sigla;
+                        option.text = uf.nome;
+                        ufSelect.add(option);
+                    });
+                })
+                .catch(error => console.error('Erro ao carregar UFs:', error));
+
+            // Carregar Municípios ao selecionar uma UF
+            document.getElementById("ufSelect").addEventListener("change", function () {
+                let uf = this.value;
+                let municipioSelect = document.getElementById("municipioSelect");
+                let municipioCodigoInput = document.getElementById("municipioCodigo");
+
+                // Limpa os municípios ao trocar a UF e o campo de código
+                municipioSelect.innerHTML = '<option value="">Selecione o Município</option>';
+                municipioCodigoInput.value = "";
+
+                if (uf) {
+                    fetch(`https://servicodados.ibge.gov.br/api/v1/localidades/estados/${uf}/municipios`)
+                        .then(response => response.json())
+                        .then(data => {
+                            data.forEach(municipio => {
+                                let option = document.createElement("option");
+                                option.value = municipio.nome; // Armazena o nome do município como valor
+                                option.text = municipio.nome;
+                                option.dataset.codigo = municipio.id; // Armazena o código do município no dataset
+                                municipioSelect.add(option);
+                            });
+                        })
+                        .catch(error => console.error('Erro ao carregar Municípios:', error));
+                }
+            });
+
+            // Preencher o campo MunicipioCodigo ao selecionar um município
+            document.getElementById("municipioSelect").addEventListener("change", function () {
+                let municipioCodigoInput = document.getElementById("municipioCodigo");
+                // Pega o código do município a partir do dataset do option selecionado
+                municipioCodigoInput.value = this.options[this.selectedIndex].dataset.codigo;
+            });
+        });
+    </script>
+}
