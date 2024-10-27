@@ -89,18 +89,13 @@ Após iniciar o aplicativo, você poderá acessar a página inicial, onde é pos
 - **Excluir um Processo**: Remove o processo do banco de dados.
 - **Visualizar Detalhes do Processo**: Exibe as informações detalhadas de um processo específico.
 
-## API Externa (API de Localidades e API de CEP)
+## API Externa (API de Localidades)
 
 ### API de Localidades
 - **Uso**: Integrada ao sistema para carregar estados e municípios dinamicamente.
 - **Endpoints Utilizados**:
   - `https://servicodados.ibge.gov.br/api/v1/localidades/estados`: Lista de estados.
   - `https://servicodados.ibge.gov.br/api/v1/localidades/estados/{UF}/municipios`: Lista de municípios por estado.
-
-### API de CEP
-- **Uso**: Pode ser integrada para preencher automaticamente o endereço do processo ao buscar o CEP.
-- **Endpoint Exemplo**:
-  - `https://viacep.com.br/ws/{CEP}/json/`: Busca dados de endereço com base no CEP.
 
 ## Estrutura de Banco de Dados
 
