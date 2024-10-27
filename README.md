@@ -18,7 +18,7 @@ O projeto utiliza as seguintes dependências:
 
 ## Estrutura do Projeto
 
-```plaintext
+```
 Crud_IBGE/
 ├── Controllers/
 │   ├── ProcessosController.cs      // Controlador principal para operações CRUD e paginação
@@ -26,6 +26,8 @@ Crud_IBGE/
 │   ├── Processo.cs                 // Modelo de dados do processo
 │   ├── Context.cs                  // Contexto do banco de dados (EF Core)
 │   └── PaginacaoViewModel.cs       // Modelo auxiliar para dados de paginação
+├── Scripts_BD/
+│   └── igbe_crud.sql               // Script de criação do banco de dados.
 ├── Views/
 │   ├── Processos/
 │   │   ├── Index.cshtml            // Lista de processos com paginação
@@ -112,3 +114,10 @@ O banco de dados contém uma tabela `Processos` com as seguintes colunas:
 - **UF**: Unidade Federativa (estado) do processo.
 - **MunicipioNome**: Nome do município do processo.
 - **MunicipioCodigo**: Código do município.
+
+O banco de dado foi gerado utilizando migrations, porém você pode utilizar o script abaixo e executar numa versão do SSMS 2022 o mesmo criará o banco de dados já com alguns dados para paginação.
+
+```
+├── Scripts_BD/
+│   └── igbe_crud.sql               // Script de criação do banco de dados.
+```
