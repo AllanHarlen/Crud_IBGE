@@ -5,7 +5,8 @@ var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
 builder.Services.AddControllersWithViews();
-builder.Services.AddDbContext<Context>(options => options.UseSqlServer("Data Source=localhost\\SQLEXPRESS;Initial Catalog=IBGE_CRUD;Integrated Security=False;User ID=kttallan;Password=88754475;Connect Timeout=15;Encrypt=False;TrustServerCertificate=False"));
+builder.Services.AddDbContext<Context>(options =>
+    options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection")));
 
 var app = builder.Build();
 
