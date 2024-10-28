@@ -3,7 +3,7 @@
 
 ## Visão Geral
 
-Este é um aplicativo ASP.NET Core MVC para gerenciar informações de processos. Ele permite criar, visualizar, editar e excluir processos. O sistema inclui funcionalidades como seleção dinâmica de estados e municípios, integração com a API de Localidades do IBGE, integração opcional com API de CEP e uma funcionalidade de paginação para facilitar a navegação entre registros.
+Este é um aplicativo ASP.NET Core MVC para gerenciar informações de processos. Ele permite criar, visualizar, editar e excluir processos. O sistema inclui funcionalidades como seleção dinâmica de estados e municípios, integração com a API de Localidades do IBGE, uma funcionalidade de paginação para facilitar a navegação entre registros.
 
 ### Paginação
 A paginação foi implementada manualmente, sem dependências externas, usando os métodos `Skip` e `Take` do Entity Framework Core. Esta abordagem divide os resultados em páginas e limita o número de registros exibidos por página. No controlador, utilizamos variáveis de controle, como o número da página e a quantidade de registros por página, para gerenciar a exibição de dados e gerar a interface de navegação entre páginas.
